@@ -81,7 +81,7 @@
 - [TASKS_COMPLETED]: Executed concurrent load tests, injected incidents (rag_slow and cost_spike), captured before/after metrics snapshots, and validated recovery after disabling incidents.
 - [EVIDENCE_LINK]: docs/evidence/optional/incident-before.png; docs/evidence/optional/incident_after.png; docs/evidence/optional/cost-before-after.png; docs/evidence/optional/auto-instrumentation.png; https://github.com/tungnguyenlam/Lab13-Observability/pull/9.
 
-### [MEMBER_E_NAME]
+### [Tong Tien Manh]
 - [TASKS_COMPLETED]:
   1. Xây dựng Streamlit dashboard (`scripts/dashboard.py`) hiển thị đủ 6 panel bắt buộc theo `docs/dashboard-spec.md`: Latency P50/P95/P99, Traffic, Error rate + breakdown, Cost over time, Tokens in/out, Quality score avg.
   2. Tích hợp SLO threshold lines (đường đứt nét) trên tất cả panel bằng Plotly — giá trị threshold đọc động từ `config/slo.yaml` thay vì hardcode, đảm bảo dashboard tự cập nhật khi SLO thay đổi.
