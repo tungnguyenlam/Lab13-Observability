@@ -7,7 +7,8 @@ from pathlib import Path
 import httpx
 
 BASE_URL = "http://127.0.0.1:8000"
-QUERIES = Path("data/sample_queries.jsonl")
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+QUERIES = PROJECT_ROOT / "data" / "sample_queries.jsonl"
 
 
 def send_request(client: httpx.Client, payload: dict) -> None:
