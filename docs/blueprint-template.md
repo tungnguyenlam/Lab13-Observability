@@ -9,7 +9,7 @@
   - Member A: [Name] | Role: Logging & PII
   - Member B: [Name] | Role: Tracing & Enrichment
   - Member C: [Name] | Role: SLO & Alerts
-  - Member D: [Nguyen Quang Dang] | Role: Load Test & Incident Injection
+  - Member D: [Name] | Role: Load Test & Dashboard
   - Member E: [Name] | Role: Demo & Report
 
 ---
@@ -45,11 +45,11 @@
 ---
 
 ## 4. Incident Response (Group)
-- [SCENARIO_NAME]: cost_spike
-- [SYMPTOMS_OBSERVED]: During load test bursts, token output and cumulative cost increased faster than baseline while service remained available.
-- [ROOT_CAUSE_PROVED_BY]: Metrics before/after incident injection showed increases from avg_cost_usd 0.0065 -> 0.0066, total_cost_usd 0.258 -> 0.3286, tokens_out_total 16928 -> 21568. Incident toggle output confirmed cost_spike=true during the run.
-- [FIX_ACTION]: Disabled the incident toggle with scripts/inject_incident.py --scenario cost_spike --disable and verified /health returned cost_spike=false.
-- [PREVENTIVE_MEASURE]: Add a repeatable game-day checklist (baseline -> inject -> observe -> rollback), keep cost/token dashboard thresholds visible, and require incident-disable verification after each drill.
+- [SCENARIO_NAME]: (e.g., rag_slow)
+- [SYMPTOMS_OBSERVED]: 
+- [ROOT_CAUSE_PROVED_BY]: (List specific Trace ID or Log Line)
+- [FIX_ACTION]: 
+- [PREVENTIVE_MEASURE]: 
 
 ---
 
@@ -67,7 +67,7 @@
 - [TASKS_COMPLETED]: 
 - [EVIDENCE_LINK]: 
 
-### [MEMBER_D_NAME]
+### [Nguyen Quang Dang]
 - [TASKS_COMPLETED]: Executed concurrent load tests, injected incidents (rag_slow and cost_spike), captured before/after metrics snapshots, and validated recovery after disabling incidents.
 - [EVIDENCE_LINK]: docs/evidence/optional/incident-before.png; docs/evidence/optional/incident_after.png; docs/evidence/optional/cost-before-after.png; docs/evidence/optional/auto-instrumentation.png; https://github.com/tungnguyenlam/Lab13-Observability/pull/7.
 
