@@ -1,19 +1,43 @@
 alerts:
   - name: high_latency_p95
     severity: P2
-    condition: latency_p95_ms > 5000 for 30m
+    condition: latency_p95_ms > 1200 for 10m
     type: symptom-based
-    owner: team-oncall
+    owner: member-c-slo
     runbook: docs/alerts.md#1-high-latency-p95
   - name: high_error_rate
     severity: P1
-    condition: error_rate_pct > 5 for 5m
+    condition: error_rate_pct > 2 for 5m
     type: symptom-based
-    owner: team-oncall
+    owner: member-c-slo
     runbook: docs/alerts.md#2-high-error-rate
   - name: cost_budget_spike
     severity: P2
-    condition: hourly_cost_usd > 2x_baseline for 15m
+    condition: avg_cost_usd > 0.004 for 10m
     type: symptom-based
     owner: finops-owner
     runbook: docs/alerts.md#3-cost-budget-spike
+  - name: policy_grounding_drop
+    severity: P3
+    condition: quality_score_avg < 0.85 for 15m
+    type: symptom-based
+    owner: member-c-slo
+    runbook: docs/alerts.md#4-policy-grounding-drop
+  - name: knowledge_miss_for_policy_questions
+    severity: P2
+    condition: repeated fallback answers or missing policy context for 10m
+    type: quality
+    owner: member-c-slo
+    runbook: docs/alerts.md#5-knowledge-miss-for-policy-questions
+  - name: pii_or_student_data_risk
+    severity: P1
+    condition: raw student identifiers appear in logs or responses
+    type: compliance
+    owner: member-c-slo
+    runbook: docs/alerts.md#6-pii-or-student-data-risk
+  - name: traffic_gap
+    severity: P3
+    condition: traffic < 10 requests in 5m during demo window
+    type: heartbeat
+    owner: member-c-slo
+    runbook: docs/alerts.md#7-traffic-gap

@@ -1,24 +1,142 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "type": "object",
+  "additionalProperties": true,
   "required": ["ts", "level", "service", "event", "correlation_id"],
   "properties": {
-    "ts": {"type": "string"},
-    "level": {"type": "string"},
-    "service": {"type": "string"},
-    "event": {"type": "string"},
-    "correlation_id": {"type": "string"},
-    "env": {"type": ["string", "null"]},
-    "user_id_hash": {"type": ["string", "null"]},
-    "session_id": {"type": ["string", "null"]},
-    "feature": {"type": ["string", "null"]},
-    "model": {"type": ["string", "null"]},
-    "latency_ms": {"type": ["integer", "null"]},
-    "tokens_in": {"type": ["integer", "null"]},
-    "tokens_out": {"type": ["integer", "null"]},
-    "cost_usd": {"type": ["number", "null"]},
-    "error_type": {"type": ["string", "null"]},
-    "tool_name": {"type": ["string", "null"]},
-    "payload": {"type": ["object", "null"]}
-  }
+    "ts": {
+      "type": "string",
+      "description": "UTC timestamp for the log event."
+    },
+    "level": {
+      "type": "string",
+      "enum": ["info", "warning", "error", "critical"]
+    },
+    "service": {
+      "type": "string",
+      "enum": ["api", "control", "day13-observability-lab"],
+      "description": "Logical service name. The app mostly emits api/control events for the school-policy assistant."
+    },
+    "event": {
+      "type": "string",
+      "enum": [
+        "app_started",
+        "request_received",
+        "response_sent",
+        "request_failed",
+        "incident_enabled",
+        "incident_disabled"
+      ],
+      "description": "Core lifecycle events for policy-question requests and incident toggles."
+    },
+    "correlation_id": {
+      "type": "string",
+      "pattern": "^(req-[a-f0-9]{8}|MISSING)$",
+      "description": "Request correlation id propagated end-to-end."
+    },
+    "env": {
+      "type": ["string", "null"]
+    },
+    "user_id_hash": {
+      "type": ["string", "null"],
+      "description": "Hashed identifier for the student/user. Raw student identifiers must never be logged."
+    },
+    "session_id": {
+      "type": ["string", "null"],
+      "description": "Conversation session id for grouping follow-up questions."
+    },
+    "feature": {
+      "type": ["string", "null"],
+      "enum": ["qa", "summary", null],
+      "description": "The user-facing school assistant feature."
+    },
+    "model": {
+      "type": ["string", "null"]
+    },
+    "latency_ms": {
+      "type": ["integer", "null"],
+      "minimum": 0
+    },
+    "tokens_in": {
+      "type": ["integer", "null"],
+      "minimum": 0
+    },
+    "tokens_out": {
+      "type": ["integer", "null"],
+      "minimum": 0
+    },
+    "cost_usd": {
+      "type": ["number", "null"],
+      "minimum": 0
+    },
+    "error_type": {
+      "type": ["string", "null"],
+      "description": "Normalized error type, useful for retrieval/tool failures during policy lookups."
+    },
+    "tool_name": {
+      "type": ["string", "null"]
+    },
+    "payload": {
+      "type": ["object", "null"],
+      "description": "Structured detail for school-policy Q&A logs. Any user text here should already be scrubbed.",
+      "additionalProperties": true,
+      "properties": {
+        "message_preview": {
+          "type": "string",
+          "description": "Sanitized preview of the student's policy question."
+        },
+        "answer_preview": {
+          "type": "string",
+          "description": "Sanitized preview of the assistant's answer."
+        },
+        "detail": {
+          "type": "string",
+          "description": "Error detail or operational note."
+        },
+        "name": {
+          "type": "string",
+          "enum": ["rag_slow", "tool_fail", "cost_spike"],
+          "description": "Incident scenario toggled by the control endpoint."
+        },
+        "tracing_enabled": {
+          "type": "boolean"
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "service": { "const": "api" }
+        },
+        "required": ["service"]
+      },
+      "then": {
+        "required": ["user_id_hash", "session_id", "feature"]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "event": { "const": "response_sent" }
+        },
+        "required": ["event"]
+      },
+      "then": {
+        "required": ["latency_ms", "tokens_in", "tokens_out", "cost_usd"]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "event": { "const": "request_failed" }
+        },
+        "required": ["event"]
+      },
+      "then": {
+        "required": ["error_type"]
+      }
+    }
+  ]
 }

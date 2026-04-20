@@ -2,15 +2,26 @@ service: day13-observability-lab
 window: 28d
 slis:
   latency_p95_ms:
-    objective: 3000
-    target: 99.5
-    note: Replace with your group's target
-  error_rate_pct:
-    objective: 2
+    objective: 800
     target: 99.0
-  daily_cost_usd:
-    objective: 2.5
-    target: 100.0
-  quality_score_avg:
-    objective: 0.75
+    note: Students asking about regulations or announcements expect fast answers; baseline requests are typically sub-300ms, so this still catches retrieval slowdowns quickly.
+  error_rate_pct:
+    objective: 1
+    target: 99.0
+    note: School-policy Q&A should almost never fail at request level. Sustained 500s usually mean retrieval failure or a backend regression.
+  traffic_requests_per_5m:
+    objective: 10
     target: 95.0
+    note: During demo/load test we expect at least one 10-request burst in a 5 minute window so dashboards, traces, and policy-answer alerts have usable signal.
+  daily_cost_usd:
+    objective: 0.05
+    target: 100.0
+    note: FakeLLM costs are tiny in this lab; crossing this budget suggests repeated load tests, overly verbose answers, or the cost_spike incident.
+  quality_score_avg:
+    objective: 0.85
+    target: 95.0
+    note: Treat this as a proxy for grounded policy answers. If it drops below 0.85, the bot may be answering without enough support from school rules, announcements, or policy docs.
+  policy_grounding_rate:
+    objective: 0.9
+    target: 95.0
+    note: Product goal: answers to school-policy questions should usually be backed by retrieved policy context rather than generic fallback text.
