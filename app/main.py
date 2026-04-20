@@ -4,7 +4,10 @@ import os
 
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import JSONResponse
+from dotenv import load_dotenv
 from structlog.contextvars import bind_contextvars
+
+load_dotenv()
 
 from .agent import LabAgent
 from .incidents import disable, enable, status
@@ -13,7 +16,15 @@ from .metrics import record_error, snapshot
 from .middleware import CorrelationIdMiddleware
 from .pii import hash_user_id, summarize_text
 from .schemas import ChatRequest, ChatResponse
-from .tracing import tracing_enabled
+from .tracing import langfuse_context, tracing_enabled
+
+# Initialise Langfuse singleton at import time so @observe picks it up
+if tracing_enabled():
+    try:
+        from langfuse import Langfuse
+        _langfuse = Langfuse()  # reads env vars set by load_dotenv() above
+    except Exception as _lf_err:  # pragma: no cover
+        pass
 
 configure_logging()
 log = get_logger()
@@ -30,6 +41,8 @@ async def startup() -> None:
         env=os.getenv("APP_ENV", "dev"),
         payload={"tracing_enabled": tracing_enabled()},
     )
+    if tracing_enabled():
+        log.info("langfuse_tracing_active", service="tracing", payload={"host": os.getenv("LANGFUSE_BASE_URL")})
 
 
 @app.get("/health")
@@ -63,6 +76,7 @@ async def chat(request: Request, body: ChatRequest) -> ChatResponse:
             feature=body.feature,
             session_id=body.session_id,
             message=body.message,
+            correlation_id=request.state.correlation_id,
         )
         log.info(
             "response_sent",
