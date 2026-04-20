@@ -27,7 +27,7 @@
 - [EVIDENCE_CORRELATION_ID_SCREENSHOT]: [Path to image]
 - [EVIDENCE_PII_REDACTION_SCREENSHOT]: [Path to image]
 - [EVIDENCE_TRACE_WATERFALL_SCREENSHOT]: [Path to image]
-- [TRACE_WATERFALL_EXPLANATION]: (Briefly explain one interesting span in your trace)
+- [TRACE_WATERFALL_EXPLANATION]: Trace `agent-run` gồm 2 span con: `retrieve()` (type=retrieval) và `generate()` (type=generation). Khi bật incident `rag_slow`, span `retrieve()` kéo dài từ ~0ms lên ~2500ms trong khi span `generate()` vẫn ~150ms — xác định rõ bottleneck nằm ở tầng RAG chứ không phải LLM.
 
 ### 3.2 Dashboard & SLOs
 - [DASHBOARD_6_PANELS_SCREENSHOT]: [Path to image]
@@ -59,9 +59,19 @@
 - [TASKS_COMPLETED]: 
 - [EVIDENCE_LINK]: (Link to specific commit or PR)
 
-### [MEMBER_B_NAME]
-- [TASKS_COMPLETED]: 
-- [EVIDENCE_LINK]: 
+### Nguyễn Việt Long — Tracing & Tags
+- [TASKS_COMPLETED]:
+  1. Xây dựng `_LangfuseContextShim` trong `app/tracing.py` — lớp shim tương thích giúp code gọi `langfuse_context.update_current_trace()` / `update_current_observation()` hoạt động với Langfuse SDK v3/v4 thông qua OTel span attributes (không còn singleton `langfuse_context` trong v3+).
+  2. Thêm `@observe()` decorator vào `LabAgent.run()` (`app/agent.py`) để tạo Trace `agent-run` trên Langfuse cho mỗi request.
+  3. Thêm `@observe(as_type="retrieval")` vào `retrieve()` (`app/mock_rag.py`) và `@observe(as_type="generation")` vào `FakeLLM.generate()` (`app/mock_llm.py`) để tạo các Observation span con bên trong trace.
+  4. Làm giàu trace metadata trong `agent.py`: gắn `name="agent-run"`, `user_id` (hashed), `session_id`, `tags=["lab", feature, model, env]`, và `metadata={"correlation_id": ...}` vào trace; gắn `doc_count`, `query_preview`, `usage_details` vào observation.
+  5. Truyền `correlation_id` từ middleware vào `agent.run()` qua `main.py` để liên kết log và trace cùng một request.
+  6. Khởi tạo Langfuse singleton tại startup trong `main.py` (`Langfuse()` đọc env vars sau `load_dotenv()`) và log `langfuse_tracing_active` khi tracing bật.
+  7. Nâng cấp Langfuse SDK từ `v3.2.1` lên `v4.3.1` (`requirements.txt`) và refactor `_LangfuseContextShim` để dùng `LangfuseOtelSpanAttributes` constants trực tiếp — ổn định hơn và tương thích cả v3 lẫn v4.
+- [EVIDENCE_LINK]:
+  - Commit `7a69c4e` — "add tracing & tags": https://github.com/tungnguyenlam/Lab13-Observability/commit/7a69c4e
+  - Commit `9812882` — "add langfuse" (upgrade v3→v4 & fix shim): https://github.com/tungnguyenlam/Lab13-Observability/commit/9812882
+  - PR #5, PR #6: branch `tracing&tags` → `main`
 
 ### [MEMBER_C_NAME]
 - [TASKS_COMPLETED]: 
