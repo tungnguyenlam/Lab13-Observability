@@ -24,4 +24,4 @@ slis:
   policy_grounding_rate:
     objective: 0.9
     target: 95.0
-    note: Product goal: answers to school-policy questions should usually be backed by retrieved policy context rather than generic fallback text.
+    note: "Product goal: answers to school-policy questions should usually be backed by retrieved policy context rather than generic fallback text."
