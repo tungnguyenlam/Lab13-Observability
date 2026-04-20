@@ -32,8 +32,6 @@
   * [../images/tracing_1.png](../images/tracing_1.png)
   * [../images/tracing_2.png](../images/tracing_2.png)
 
-- [TRACE_WATERFALL_EXPLANATION]: (Briefly explain one interesting span in your trace)
-- [EVIDENCE_TRACE_WATERFALL_SCREENSHOT]: [Path to image]
 - [TRACE_WATERFALL_EXPLANATION]: Trace `agent-run` gồm 2 span con: `retrieve()` (type=retrieval) và `generate()` (type=generation). Khi bật incident `rag_slow`, span `retrieve()` kéo dài từ ~0ms lên ~2500ms trong khi span `generate()` vẫn ~150ms — xác định rõ bottleneck nằm ở tầng RAG chứ không phải LLM.
 
 ### 3.2 Dashboard & SLOs
@@ -77,34 +75,11 @@
 
 ## 5. Individual Contributions & Evidence
 
-### [MEMBER_A_NAME]
+### [Nguyễn Lâm Tùng, Trần Gia Khánh]
 - [TASKS_COMPLETED]: Triển khai logging JSON có correlation_id xuyên suốt request, bổ sung log enrichment context, áp dụng PII scrubbing/redaction trong pipeline logging, và verify không rò rỉ PII bằng scripts/validate_logs.py cùng test liên quan.
-- [EVIDENCE_LINK]: (Link to specific commit or PR)
+- [EVIDENCE_LINK]: https://github.com/tungnguyenlam/Lab13-Observability/pull/4; https://github.com/tungnguyenlam/Lab13-Observability/pull/1
 
-### [MEMBER_B_NAME]
-- [TASKS_COMPLETED]: Đảm bảo decorator @observe hoạt động trong app/agent.py, cấu hình langfuse_context.update_current_trace đúng user_id/session_id/tags, gửi 10-20 request và verify traces trên Langfuse UI.
-- [EVIDENCE_LINK]: 
-
-### [MEMBER_C_NAME]
-- [TASKS_COMPLETED]: Chỉnh targets trong config/slo.yaml cho phù hợp nhóm, bổ sung/hoàn thiện rules trong config/alert_rules.yaml, và viết runbook trong docs/alerts.md.
-- [EVIDENCE_LINK]: 
-
-### [MEMBER_D_NAME]
-- [TASKS_COMPLETED]: Chạy python scripts/load_test.py --concurrency 5, chạy python scripts/inject_incident.py --scenario rag_slow, ghi lại triệu chứng và root cause cho phần Incident Response trong báo cáo.
-- [EVIDENCE_LINK]: 
-
-### [MEMBER_E_NAME]
-- [TASKS_COMPLETED]: Build dashboard 6 panel (Latency P50/P95/P99, Traffic, Error Rate, Cost, Tokens, Quality) theo docs/dashboard-spec.md và chụp screenshot đủ 6 panel.
-- [EVIDENCE_LINK]: 
-
-### [MEMBER_F_NAME]
-- [TASKS_COMPLETED]: Điền đầy đủ docs/blueprint-template.md, thu thập screenshot/evidence từ B/C/D/E, và đảm bảo tất cả tags [ ... ] trong báo cáo được điền đầy đủ.
-- [EVIDENCE_LINK]: 
-
-### [MEMBER_G_NAME]
-- [TASKS_COMPLETED]: Chạy python scripts/validate_logs.py để kiểm tra tiến độ toàn nhóm, chuẩn bị live demo, và đặt câu hỏi debug theo docs/mock-debug-qa.md.
-- [EVIDENCE_LINK]: 
-### Nguyễn Việt Long — Tracing & Tags
+### [Nguyễn Việt Long]
 - [TASKS_COMPLETED]:
   1. Xây dựng `_LangfuseContextShim` trong `app/tracing.py` — lớp shim tương thích giúp code gọi `langfuse_context.update_current_trace()` / `update_current_observation()` hoạt động với Langfuse SDK v3/v4 thông qua OTel span attributes (không còn singleton `langfuse_context` trong v3+).
   2. Thêm `@observe()` decorator vào `LabAgent.run()` (`app/agent.py`) để tạo Trace `agent-run` trên Langfuse cho mỗi request.
@@ -134,6 +109,14 @@
   5. Tích hợp Langfuse REST API (`GET /api/public/traces`) vào dashboard — hiển thị tổng số traces, bảng 20 traces gần nhất (ID, Name, Latency, Tokens, Cost, Time), và cảnh báo khi chưa đủ 10 traces cho yêu cầu chấm điểm.
   6. Fix YAML syntax lỗi trong `config/slo.yaml` (dấu `:` trong nội dung note gây `ScannerError`) và cập nhật `requirements.txt` với các package mới: `streamlit==1.56.0`, `plotly==6.7.0`, `pyyaml==6.0.3`.
 - [EVIDENCE_LINK]: https://github.com/tungnguyenlam/Lab13-Observability/pull/8
+
+### [Ha Huy Hoang]
+- [TASKS_COMPLETED]: Chịu trách nhiệm biên tập và hoàn thiện file `docs/blueprint-template.md` theo chuẩn chấm tự động: chuẩn hóa cấu trúc toàn bộ báo cáo, tổng hợp và liên kết lại minh chứng từ các mảng Tracing/SLO/Incident/Dashboard, đối soát số liệu giữa phần mô tả và screenshot, đồng thời rà soát toàn bộ tag bắt buộc để đảm bảo đúng định dạng và không thiếu trường thông tin.
+- [EVIDENCE_LINK]: docs/blueprint-template.md; ../images/tracing_1.png; ../images/tracing_2.png; ../images/dashboard_latency.png; ../images/alerts_rules_1-2.png; https://github.com/tungnguyenlam/Lab13-Observability/pull/11
+
+### [Nguyen Minh Hieu]
+- [TASKS_COMPLETED]: Thực hiện kiểm tra chất lượng end-to-end bằng `python scripts/validate_logs.py` để theo dõi mức độ hoàn thành của toàn nhóm, đồng thời điều phối phần live demo và chuẩn bị bộ câu hỏi debug theo `docs/mock-debug-qa.md` nhằm đảm bảo buổi demo ổn định, đúng trọng tâm chấm điểm.
+- [EVIDENCE_LINK]: [ ../images/validate_logs.png](../images/validate_logs.png); 
 
 ---
 
