@@ -9,7 +9,7 @@
   - Member A: [Name] | Role: Logging & PII
   - Member B: [Name] | Role: Tracing & Enrichment
   - Member C: [Name] | Role: SLO & Alerts
-  - Member D: [Name] | Role: Load Test & Incident Injection
+  - Member D: [Nguyen Quang Dang] | Role: Load Test & Incident Injection
   - Member E: [Name] | Role: Demo & Report
 
 ---
@@ -69,7 +69,7 @@
 
 ### [MEMBER_D_NAME]
 - [TASKS_COMPLETED]: Executed concurrent load tests, injected incidents (rag_slow and cost_spike), captured before/after metrics snapshots, and validated recovery after disabling incidents.
-- [EVIDENCE_LINK]: docs/evidence/optional/incident-before.png; docs/evidence/optional/incident_after.png; docs/evidence/optional/cost-before-after.png; docs/evidence/optional/auto-instrumentation.png; add your commit or PR URL here.
+- [EVIDENCE_LINK]: docs/evidence/optional/incident-before.png; docs/evidence/optional/incident_after.png; docs/evidence/optional/cost-before-after.png; docs/evidence/optional/auto-instrumentation.png; https://github.com/tungnguyenlam/Lab13-Observability/pull/7.
 
 ### [MEMBER_E_NAME]
 - [TASKS_COMPLETED]: 
