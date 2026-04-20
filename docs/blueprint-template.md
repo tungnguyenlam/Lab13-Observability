@@ -29,17 +29,17 @@
 - [EVIDENCE_CORRELATION_ID_SCREENSHOT]: [Path to image]
 - [EVIDENCE_PII_REDACTION_SCREENSHOT]: [Path to image]
 - [EVIDENCE_TRACE_WATERFALL_SCREENSHOT]: 
-  * [images\tracing_1.png](images\tracing_1.png)
-  * [images\tracing_2.png](images\tracing_2.png)
+  * [../images/tracing_1.png](../images/tracing_1.png)
+  * [../images/tracing_2.png](../images/tracing_2.png)
 
 - [TRACE_WATERFALL_EXPLANATION]: (Briefly explain one interesting span in your trace)
 
 ### 3.2 Dashboard & SLOs
 - [DASHBOARD_6_PANELS_SCREENSHOT]:
-  * [images\dashboard_latency.png](images\dashboard_latency.png),
-  * [images\dashboard_traffic-error-rate.png](images\dashboard_traffic-error-rate.png),
-  * [images\dashboard_cost-token.png](images\dashboard_cost-token.png), 
-  * [images\dashboard_quality-score.png](images\dashboard_quality-score.png).
+  * [../images/dashboard_latency.png](../images/dashboard_latency.png),
+  * [../images/dashboard_traffic-error-rate.png](../images/dashboard_traffic-error-rate.png),
+  * [../images/dashboard_cost-token.png](../images/dashboard_cost-token.png), 
+  * [../images/dashboard_quality-score.png](../images/dashboard_quality-score.png).
 
 - [SLO_TABLE]:
 
@@ -51,10 +51,10 @@
 
 ### 3.3 Alerts & Runbook
 - [ALERT_RULES_SCREENSHOT]: 
-  * [images\alerts_rules_1-2.png](images\alerts_rules_1-2.png)
-  * [images\alerts_rules_3-4.png](images\alerts_rules_3-4.png)
-  * [images\alerts_rules_5-6.png](images\alerts_rules_5-6.png)
-  * [images\alerts_rules_7.png](images\alerts_rules_7.png)
+  * [../images/alerts_rules_1-2.png](../images/alerts_rules_1-2.png)
+  * [../images/alerts_rules_3-4.png](../images/alerts_rules_3-4.png)
+  * [../images/alerts_rules_5-6.png](../images/alerts_rules_5-6.png)
+  * [../images/alerts_rules_7.png](../images/alerts_rules_7.png)
 
 - SAMPLE RUNBOOK LINK: [docs/alerts.md#L...]
 
