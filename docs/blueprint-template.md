@@ -82,8 +82,14 @@
 - [EVIDENCE_LINK]: docs/evidence/optional/incident-before.png; docs/evidence/optional/incident_after.png; docs/evidence/optional/cost-before-after.png; docs/evidence/optional/auto-instrumentation.png; https://github.com/tungnguyenlam/Lab13-Observability/pull/9.
 
 ### [MEMBER_E_NAME]
-- [TASKS_COMPLETED]: 
-- [EVIDENCE_LINK]: 
+- [TASKS_COMPLETED]:
+  1. Xây dựng Streamlit dashboard (`scripts/dashboard.py`) hiển thị đủ 6 panel bắt buộc theo `docs/dashboard-spec.md`: Latency P50/P95/P99, Traffic, Error rate + breakdown, Cost over time, Tokens in/out, Quality score avg.
+  2. Tích hợp SLO threshold lines (đường đứt nét) trên tất cả panel bằng Plotly — giá trị threshold đọc động từ `config/slo.yaml` thay vì hardcode, đảm bảo dashboard tự cập nhật khi SLO thay đổi.
+  3. Cài đặt cơ chế lưu lịch sử theo cửa sổ 1 giờ (trim tự động) và auto refresh mỗi 3 giây để đáp ứng yêu cầu spec (`default time range = 1 hour`, `auto refresh 15-30s`).
+  4. Xây dựng hệ thống Active Alerts đọc từ `config/alert_rules.yaml`, evaluate 5 rule có thể tự động theo cửa sổ thời gian (sustained for Xm): `high_latency_p95`, `high_error_rate`, `cost_budget_spike`, `policy_grounding_drop`, `traffic_gap`. Hai rule cần kiểm tra log thủ công được hiển thị riêng trong expander.
+  5. Tích hợp Langfuse REST API (`GET /api/public/traces`) vào dashboard — hiển thị tổng số traces, bảng 20 traces gần nhất (ID, Name, Latency, Tokens, Cost, Time), và cảnh báo khi chưa đủ 10 traces cho yêu cầu chấm điểm.
+  6. Fix YAML syntax lỗi trong `config/slo.yaml` (dấu `:` trong nội dung note gây `ScannerError`) và cập nhật `requirements.txt` với các package mới: `streamlit==1.56.0`, `plotly==6.7.0`, `pyyaml==6.0.3`.
+- [EVIDENCE_LINK]: https://github.com/tungnguyenlam/Lab13-Observability/pull/8
 
 ---
 
