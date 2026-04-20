@@ -73,9 +73,9 @@
   - Commit `9812882` — "add langfuse" (upgrade v3→v4 & fix shim): https://github.com/tungnguyenlam/Lab13-Observability/commit/9812882
   - PR #5, PR #6: branch `tracing&tags` → `main`
 
-### [MEMBER_C_NAME]
-- [TASKS_COMPLETED]: 
-- [EVIDENCE_LINK]: 
+### [Hoang Anh Quyen]
+- [TASKS_COMPLETED]: Updated `config/slo.yaml` for the school-policy chatbot use case, added and refined alert rules in `config/alert_rules.yaml`, expanded `docs/alerts.md` with matching runbooks, and adjusted `config/logging_schema.json` to better fit student-policy Q&A logs and compliance needs.
+- [EVIDENCE_LINK]: https://github.com/tungnguyenlam/Lab13-Observability/pull/2
 
 ### [Nguyen Quang Dang]
 - [TASKS_COMPLETED]: Executed concurrent load tests, injected incidents (rag_slow and cost_spike), captured before/after metrics snapshots, and validated recovery after disabling incidents.
