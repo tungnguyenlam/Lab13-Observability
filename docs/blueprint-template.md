@@ -77,9 +77,9 @@
 - [TASKS_COMPLETED]: 
 - [EVIDENCE_LINK]: 
 
-### [MEMBER_D_NAME]
-- [TASKS_COMPLETED]: 
-- [EVIDENCE_LINK]: 
+### [Nguyen Quang Dang]
+- [TASKS_COMPLETED]: Executed concurrent load tests, injected incidents (rag_slow and cost_spike), captured before/after metrics snapshots, and validated recovery after disabling incidents.
+- [EVIDENCE_LINK]: docs/evidence/optional/incident-before.png; docs/evidence/optional/incident_after.png; docs/evidence/optional/cost-before-after.png; docs/evidence/optional/auto-instrumentation.png; https://github.com/tungnguyenlam/Lab13-Observability/pull/9.
 
 ### [MEMBER_E_NAME]
 - [TASKS_COMPLETED]: 
